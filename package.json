@@ -1,6 +1,6 @@
 {
   "name": "get-outer-html-by-string",
-  "version": "1.0.1",
+  "version": "2.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -15,5 +15,9 @@
     "type": "git"
   },
   "author": "0x0a0d",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "mocha": "^6.2.0"
+  }
 }
