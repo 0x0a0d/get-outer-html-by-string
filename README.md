@@ -58,8 +58,27 @@ describe('test', function() {
     done();
   });
 });
+```
 
-
+## v3 update
+```js
+// to get all meta tag that have [name="ob:c*] try this
+let result = {
+  lastIndex: 0
+}
+for (let i = 1; i <= 5; i ++) {
+  result = getOuterHtmlByStringUnsafe({
+    searchString: 'name="ob',
+    html,
+    lastIndex: result.lastIndex
+  });
+  if (i === 3) {
+    // span trap
+    chai.expect(result.outerHtml).equal(`<span name="ob:cccc" value="3"> span trap </span>`, `Failed span trap in meta tag test`);
+  } else {
+    chai.expect(result.outerHtml).equal(`<meta name="ob:cccc" value="${i}" />`, `Failed meta${i} tag test`);
+  }
+}
 ```
 
 ##Method
@@ -80,6 +99,21 @@ If searchString === '<span>'
     + you will get '<span>trap tag<a>a trap in span</a><span>another span</span></span>'
 If searchString === '<span>a' // a is first char in word 'another'
     + you get '<span>another span</span>'
+```
+
+```
+getOuterHtmlByStringUnsafe({searchString, html, lastIndex = 0, forceRegex = false});
++ searchString: where the string begin
++ html: full page html need to parse
++ lastIndex: search from, often use in loop to get all 
+             or get from after pharse you know it will be in html
++ forceRegex (default=false): try to parse searchString as RegExp, for more details, lookup in source on GitHub
+=> return {
+    tagName: matched tagName or null if failed
+    lastIndex: where you should start from to find next
+    outerHTML: outerHTML start from your searchString and end at its closing-tag or null if failed
+}
+for more details. Lookup on test folder
 ```
 
 

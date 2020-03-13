@@ -1,6 +1,6 @@
 {
   "name": "get-outer-html-by-string",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -19,5 +19,8 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "mocha": "^6.2.0"
+  },
+  "dependencies": {
+    "escape-string-regexp": "^2.0.0"
   }
 }
