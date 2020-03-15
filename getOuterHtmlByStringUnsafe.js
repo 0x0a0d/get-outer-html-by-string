@@ -38,25 +38,28 @@ function getOuterHtmlByStringUnsafe({searchString, html, lastIndex = 0, forceReg
   searchRegex.lastIndex = lastIndex;
   const m = searchRegex.exec(html);
   if (m != null) {
-    const [matchString, tagName] = m;
+    const [matchString, tagName, ...values] = m;
     const is_self_closing_tag = voidElementValidate(tagName, matchString);
     if (is_self_closing_tag === false) {
-      return getOuterHtmlByTagName(tagName, html, searchRegex.lastIndex - matchString.length);
-    } else if (is_self_closing_tag !== -1) {
-      const outerHtml = matchString.substr(0, is_self_closing_tag + 1);
       return {
-        tagName,
-        outerHtml,
-        lastIndex: searchRegex.lastIndex - matchString.length + is_self_closing_tag + 1
+        values,
+        ...getOuterHtmlByTagName(tagName, html, searchRegex.lastIndex - matchString.length)
       }
+    }
+    let outerHtml, lastIndex;
+    if (is_self_closing_tag !== -1) {
+      outerHtml = matchString.substr(0, is_self_closing_tag + 1);
+      lastIndex = searchRegex.lastIndex - matchString.length + is_self_closing_tag + 1
     } else {
       const closingTagIndex = html.indexOf('>', searchRegex.lastIndex);
-      const lastIndex = closingTagIndex === -1 ? html.length : (closingTagIndex + 1);
-      return {
-        tagName,
-        outerHtml: matchString + html.substring(searchRegex.lastIndex, lastIndex),
-        lastIndex
-      }
+      lastIndex = closingTagIndex === -1 ? html.length : (closingTagIndex + 1);
+      outerHtml = matchString + html.substring(searchRegex.lastIndex, lastIndex);
+    }
+    return {
+      tagName,
+      values,
+      outerHtml,
+      lastIndex
     }
   } else {
     return {
