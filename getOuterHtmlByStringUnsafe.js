@@ -26,7 +26,7 @@ function getOuterHtmlByStringUnsafe({searchString, html, lastIndex = 0, forceReg
         const suffixTagName = pattern.replace(/^([a-zA-Z]*)>.*/, '$1')
         searchRegex = new RegExp(`<\\s*([a-zA-Z]*${suffixTagName})>${pattern.replace(/^[a-zA-Z]*>(.*)$/, '$1')}`, flags);
       } else {
-        searchRegex = new RegExp(`<\\s*([a-zA-Z]+)\\s[^>]*?${searchString}`, flags);
+        searchRegex = new RegExp(`<\\s*([a-zA-Z]+)\\s[^>]*?${pattern}`, flags);
       }
     }
   } else if (/^[a-zA-Z]*>/.test(searchString)) {
