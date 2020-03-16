@@ -28,6 +28,8 @@ function getOuterHtmlByStringUnsafe({searchString, html, lastIndex = 0, forceReg
       } else {
         searchRegex = new RegExp(`<\\s*([a-zA-Z]+)\\s[^>]*?${pattern}`, flags);
       }
+    } else {
+      searchRegex = searchString;
     }
   } else if (/^[a-zA-Z]*>/.test(searchString)) {
     const suffixTagName = searchString.replace(/^([a-zA-Z]*)>.*/, '$1')
