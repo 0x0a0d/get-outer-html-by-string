@@ -16,9 +16,9 @@ function getOuterHtmlByStringUnsafe({searchString, html, lastIndex = 0, forceReg
   let searchRegex;
   if (forceRegex) {
     const regStr = searchString.toString();
+    let flags = regStr.replace(/^.*\/([gimy]*)$/, '$1');
+    const pattern = regStr.replace(/^\/(.*)\/.*$/, '$1');
     if (regStr.substr(1, 1) !== '<') {
-      let flags = regStr.replace(/^.*\/([gimy]*)$/, '$1');
-      const pattern = regStr.replace(/^\/(.*)\/.*$/, '$1');
       if (flags.indexOf('g') === -1) {
         flags += 'g';
       }
@@ -29,7 +29,7 @@ function getOuterHtmlByStringUnsafe({searchString, html, lastIndex = 0, forceReg
         searchRegex = new RegExp(`<\\s*([a-zA-Z]+)\\s[^>]*?${pattern}`, flags);
       }
     } else {
-      searchRegex = searchString;
+      searchRegex = new RegExp(pattern.replace(/^<\s*([a-zA-Z]+)/, '<($1)'), flags);
     }
   } else if (/^[a-zA-Z]*>/.test(searchString)) {
     const suffixTagName = searchString.replace(/^([a-zA-Z]*)>.*/, '$1')
