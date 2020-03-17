@@ -17,11 +17,11 @@ function getOuterHtmlByStringUnsafe({searchString, html, lastIndex = 0, forceReg
   if (forceRegex) {
     const regStr = searchString.toString();
     let flags = regStr.replace(/^.*\/([gimy]*)$/, '$1');
+    if (flags.indexOf('g') === -1) {
+      flags += 'g';
+    }
     const pattern = regStr.replace(/^\/(.*)\/.*$/, '$1');
     if (regStr.substr(1, 1) !== '<') {
-      if (flags.indexOf('g') === -1) {
-        flags += 'g';
-      }
       if (/^[a-zA-Z]*>/.test(pattern)) {
         const suffixTagName = pattern.replace(/^([a-zA-Z]*)>.*/, '$1')
         searchRegex = new RegExp(`<\\s*([a-zA-Z]*${suffixTagName})>${pattern.replace(/^[a-zA-Z]*>(.*)$/, '$1')}`, flags);
