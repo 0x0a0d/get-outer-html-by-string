@@ -7,7 +7,7 @@ const getOuterHtmlByTagName = require('./getOuterHtmlByTagName');
  * get outerHtml by provide
  * @param {string} searchString - begin of tag to match
  * @param {string} html - full html search in
- * @param {forceRegex} forceRegex - searchString is RegExp, not string
+ * @param {boolean} forceRegex - searchString is RegExp, not string
  * @param {number} [lastIndex=0] - start search from
  * @returns {null|{outerHtml: string, lastIndex: number}}
  */
