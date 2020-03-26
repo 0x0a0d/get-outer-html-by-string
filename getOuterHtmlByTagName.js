@@ -1,5 +1,3 @@
-const scriptTag = require('./helper/scriptTag');
-
 module.exports = function getOuterHtmlByTagName (tagName, html, i) {
   let outerHtml = '';
   let counter = 0;
