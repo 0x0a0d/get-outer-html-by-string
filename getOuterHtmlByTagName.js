@@ -50,6 +50,7 @@ module.exports = function getOuterHtmlByTagName (tagName, html, i) {
         const str = html.substr(i, 8);
         if (str === '<script>' || str === '<script ') {
           innerScriptTag = true;
+          counter ++;
           outerHtml += str;
           i+= 8;
           continue;
@@ -59,8 +60,12 @@ module.exports = function getOuterHtmlByTagName (tagName, html, i) {
         const str = html.substr(i, 9);
         if (str === '</script>' || str === '</script ') {
           innerScriptTag = false;
+          counter --;
           outerHtml += str;
           i+= 9;
+          if (counter === 0) {
+            break;
+          }
           continue;
         }
       }
